@@ -1,0 +1,186 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+<main id="main">
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-7">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+              
+                {% for item in images%}
+                <div class="swiper-slide zoom-area">
+                  <div class="large"></div>
+                  <img class="small-img" src="../{{ item }}" alt="">
+                </div>
+                {% endfor %}
+
+                {% if video %}
+                <div class="swiper-slide">
+                  <video id="myVideo" controls><source src="../{{product.video}}" type="video/mp4"></video>
+                </div>
+                {% endif %}
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="portfolio-info">
+              <h3>{{ product.productname }}</h3>
+              <p class="prod-category">{{ product.category }}</p>
+              <a class="nav-link scrollto getstartedwhatsapp" onclick="openChat()" target="_blank">
+                <span><i class="fa fa-whatsapp fa-icon"></i></span>&nbsp;WhatsApp DM
+              </a>
+            </div>
+            <div class="portfolio-description">
+              <h2>Product description</h2>
+              <p class="prod-description">
+                {{ product.description }}
+              </p>
+              <label class="switch">
+                <input type="checkbox" class="zoom-button" onchange="toggleZoom(this)">
+                <span class="slider round"></span>
+              </label>
+              <span class="zoom-label">Zoom on hover</span>
+              <div class="portfolio-share">
+                <p>Share<span>
+                  <a href="whatsapp://send?text=https://127.0.0.1:8000/products/{{ product.product_id }}" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
+                    <i class="fa fa-whatsapp fa-icon"></i>
+                  </a>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://127.0.0.1:8000/products/{{ product.product_id }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
+                    <i class="fa fa-facebook fa-icon"></i>
+                  </a>
+                  <a href="https://twitter.com/share?url=https://127.0.0.1:8000/products/{{ product.product_id }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">
+                    <i class="fa fa-twitter fa-icon"></i>
+                  </a>
+                </span></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+  <script src="../static/js/jquery-2.1.0.min.js"></script>
+  <script>
+    function openChat() {
+      url = window.location.href
+      window.open("https://wa.me/+919363303725/?text=I am interested in this product. "+encodeURIComponent(url))
+    }
+
+    if(document.getElementById('myVideo')){
+      document.getElementById('myVideo').addEventListener("playing", () => {
+        swiper.autoplay.stop();
+      });
+    }
+
+    // variable Zoom Power
+    var zoomPower = 4;
+
+    // magnifying logic
+    var sub_width = 0;
+    var sub_height = 0;
+    var mx, my;
+    $(".zoom-area").mousemove(function(e){
+      var activeInd = swiper.activeIndex;
+      if (!sub_width && !sub_height) {
+        var image_object = new Image();
+        // image_object.src = $(".small-img").attr("src");
+        image_object.src = document.getElementsByTagName("img")[activeInd].src;
+        console.log(image_object.src)
+        sub_width = image_object.width;
+        sub_height = image_object.height;
+      } else {
+        var magnify_position = $(this).offset();
+        // console.log(magnify_position);
+        mx = e.pageX - magnify_position.left;
+        my = e.pageY - magnify_position.top;
+
+        if (mx < $(this).width() && my < $(this).height() && mx > 0 && my > 0) {
+          $(".large").fadeIn(100);
+        } else {
+          $(".large").fadeOut(100);
+        }
+        if ($(".large").is(":visible")) {
+          applyZoom();
+        }
+      }
+    });
+
+    function applyZoom() {
+      $(".large").css("background","url('" + $(".small-img").attr("src") + "') no-repeat");
+      $(".large").css("background-size", $(".small-img").width()*zoomPower + 'px' + ' ' + $(".small-img").height()*zoomPower + 'px');
+      var rx = Math.round(mx/$(".small-img").width()*$(".small-img").width()*zoomPower - $(".large").width()/2)*-1;
+      var ry = Math.round(my/$(".small-img").height()*$(".small-img").height()*zoomPower - $(".large").height()/2)*-1;
+
+      var bgp = rx + "px " + ry + "px";
+
+      var px = mx - $(".large").width()/2;
+      var py = my - $(".large").height()/2;
+
+      $(".large").css({left: px, top: py, backgroundPosition: bgp});
+    }
+
+    // Experimental Zoom in/ Zoom out on wheel scroll
+    var scrollStatus = {
+      wheeling: false,
+      functionCall: false
+    };
+    var scrollTimer = false;
+    window.addEventListener('wheel', function(event){
+      if ($(".large").is(":visible")) {
+        var initialZoom = parseFloat(10);
+        scrollStatus.wheeling = true;
+        // console.log('deltaY', event.deltaY);
+        if (!scrollStatus.functionCall) {
+          if (event.deltaY < 0) {
+            // initialZoom ++;
+            // console.log('scrolling up', initialZoom);
+            if (initialZoom < 10 ) {
+              initialZoom = initialZoom + 0.5;
+            }
+          } else if (event.deltaY > 0) {
+            // console.log('scrolling down', initialZoom);
+            // initialZoom --;
+            if (initialZoom > 1 ) {
+              initialZoom = initialZoom - 0.5;
+            }
+          }
+          // console.log('zoom power', initialZoom);
+          zoomPower = initialZoom;
+          applyZoom();
+          scrollStatus.functionCall = true;
+        }
+
+        window.clearInterval(scrollTimer);
+        scrollTimer = window.setTimeout(function() {
+          scrollStatus.wheeling = false;
+          scrollStatus.functionCall = false;
+        }, 10); //set this millisecond to your liking
+      }
+    });
+
+    function toggleZoom(e) {
+      if(e.checked) {
+        document.getElementsByClassName('large')[0].style.opacity = 1;
+        document.getElementsByClassName('zoom-area')[0].style.cursor = 'none';
+      }
+      else {
+        document.getElementsByClassName('large')[0].style.opacity = 0;
+        document.getElementsByClassName('zoom-area')[0].style.cursor = 'auto';
+      }
+    }
+
+  </script>
+
+{% endblock %}

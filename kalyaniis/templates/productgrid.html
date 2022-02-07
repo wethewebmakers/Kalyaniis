@@ -1,0 +1,145 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+    <!-- ***** Products Area Starts ***** -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2 style="text-transform: capitalize;">{{ category }}</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="back-to-form">
+            <a class="back-t" href="/updateproducts"><i class="fa fa-arrow-left fa-icon"></i></span>&nbsp;&nbsp;Back to Form</a>
+        </div>
+        {% endif %}
+        <div class="container">
+            <div class="row">
+                {% for product in productss %}
+                <div class="col-lg-4 col-md-6 col-xs-6" style="width: 50%;">
+                    <div class="item">
+                        <div class="thumb">
+                           <a href="{% url 'productdetail' product.product_id %}"><img src="../{{ product.image1 }}" alt=""></a>
+                        </div>
+                        <div class="down-content">
+                            <a href="{% url 'productdetail' product.product_id %}"><h4>{{ product.productname }}</h4></a>
+                            {% if user.is_authenticated %}
+                            <a class="dm-button" style="background-color: #e80f0f;" id="dl-button" onclick="deletemodal()"><i class="fa fa-trash fa-icon"></i></span>&nbsp;&nbsp;Delete</a>
+                            {% else %}
+                            <a class="nav-link scrollto getstartedwhatsapp dm-button" onclick="openChat(this, '{{ product.product_id }}')" target="_blank"><span><i class="fa fa-whatsapp fa-icon"></i></span>&nbsp;&nbsp;WhatsApp DM</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="close-popup">&times;</div>
+                        <p style="margin-bottom: 5px;">Are you sure want to delete this product ?</p>
+                        <span style="display: inline-flex">
+                            <a class="popup-button" id="dl-button" onclick="deleteproduct('{{ product.product_id }}')">Delete</a>
+                            <a class="popup-button" id="cancel-button">Cancel</a>
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-lg-12">
+                    <ul class="pagination">
+
+                        {% if productss.paginator.num_pages > 1 %} 
+                            {% if productss.has_previous %}
+                                <li><a href="?page={{ productss.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                            {% else %}
+                                <li class="disabled page-item"><a class="page-link" style="border: 1px solid white;color: #6c757d;"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                            {% endif %}
+                            
+                            {% if productss.number|add:'-2' > 1 %}
+                                <li><a href="?page={{ productss.number|add:'-2' }}">&hellip;</a></li>
+                            {% endif %}
+                            
+                            {% for i in productss.paginator.page_range %}
+                                {% if productss.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% elif i > productss.number|add:'-2' and i < productss.number|add:'2' %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if productss.paginator.num_pages > productss.number|add:'2' %}
+                                <li><a  href="?page={{ productss.number|add:'2' }}">&hellip;</a></li>
+                            {% endif %}
+                            
+                            {% if productss.has_next %}
+                                <li><a href="?page={{ productss.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                            {% else %}
+                                <li class="disabled page-item"><a class="page-link" style="border: 1px solid white;color: #6c757d;"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                            {% endif %}
+                        {% endif %}
+                        
+                        </ul>
+                </div>
+            
+            </div>
+        </div>
+    </section>
+    
+    <!-- ***** Products Area Ends ***** -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close-popup")[0];
+
+        var cancel = document.getElementById("cancel-button");
+
+        // When the user clicks the button, open the modal
+        function deletemodal() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        cancel.onclick = function(){
+            modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function deleteproduct(id){
+            var data = {'product_id': id}
+            $.ajax({
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                url: '../deleteproduct',  
+                type: 'POST', 
+                data: data, 
+                success: function(response) {  
+                    location.reload()             
+                }  
+            });    
+        }
+
+        function openChat(e, id) {
+            url = window.location.href
+            arr = url.split('/')
+            url = arr[0] + '//' + arr[2] + '/products/' + String(id)
+            window.open("https://wa.me/+919363303725/?text=I am interested in this product. "+encodeURIComponent(url))
+        }
+    </script>
+
+{% endblock %}

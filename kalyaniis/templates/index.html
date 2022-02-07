@@ -1,1 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+<title>Kalyaniis</title>
+
+<!-- Favicon -->
+<link href="../../static/images/logo.png" rel="icon">
+
+<!-- Additional CSS Files -->
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="../static/css/font-awesome.css">
+
+<link rel="stylesheet" href="../static/css/templatemo-hexashop.css">
+
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+
+<link rel="stylesheet" href="../static/css/lightbox.css">
+
+<link href="../static/css/swiper-bundle.min.css" rel="stylesheet">
+
+</head>
+    
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/home" class="logo">
+                            <img src="../static/images/logo-black.png" class="k-logo">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="/home">Home</a></li>
+                            <li class="submenu">
+                                <a style="cursor: pointer;" onclick="showDropdown()" onmouseover="hoverDropdown()">Categories</a>
+                                <!-- <a  onclick="dropcategory()">Categories</a> -->
+                                <ul class="category-dropdown">
+                                    <li><a href="{% url 'productcategory' 'silksarees' %}">Exclusive silk sarees</a></li>
+                                    <li><a href="{% url 'productcategory' 'designersarees' %}">Designer sarees</a></li>
+                                    <li><a href="{% url 'productcategory' 'kurtis' %}">Kurtis</a></li>
+                                    <li><a href="{% url 'productcategory' 'lehenga' %}">Lehenga</a></li>
+                                </ul>
+                            </li>
+                            <li class="scroll-to-section"><a href="/home#exploreit">Explore</a></li>
+                            <li class="scroll-to-section"><a href="/home#footer">Contact</a></li>
+                        </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    {% block 'body' %}
+    {% endblock %}
+
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container" id="footer">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 footeralign">
+                    <div class="first-item">
+                        <div class="logo">
+                            <img src="../static/images/logo-white.png" alt="KALYANIIS" style="width: 182px;">
+                        </div>
+                        <ul>
+                            <li class="whatsappdm"><a style="padding: 0.5rem 1rem;" class="nav-link scrollto getstartedwhatsapp" href="https://wa.me//+919363303725" target="_blank"><span><i class="fa fa-whatsapp fa-icon"></i></span>WhatsApp DM</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 footeralign">
+                    <h4>Shopping &amp; Categories</h4>
+                    <ul>
+                        <li><a href="{% url 'productcategory' 'silksarees' %}">Silk Sarees Shopping</a></li>
+                        <li><a href="{% url 'productcategory' 'designersarees' %}">Designer Sarees Shopping</a></li>
+                        <li><a href="{% url 'productcategory' 'kurtis' %}">Kurtis Shopping</a></li>
+                        <li><a href="{% url 'productcategory' 'lehenga' %}">Lehenga Shopping</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 footeralign">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="../home">Homepage</a></li>
+                        <li><a href="../home#exploreit">Explore</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="under-footer">
+                    <br>Designed with &hearts; by <a href="https://webmakers.co.in" target="_blank">Webmakers</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+<!-- jQuery -->
+<script src="../static/js/jquery-2.1.0.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="../static/js/popper.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+<!-- Plugins -->
+<script src="../static/js/owl-carousel.js"></script>
+<script src="../static/js/accordions.js"></script>
+<script src="../static/js/datepicker.js"></script>
+<script src="../static/js/scrollreveal.min.js"></script>
+<script src="../static/js/waypoints.min.js"></script>
+<script src="../static/js/jquery.counterup.min.js"></script>
+<script src="../static/js/imgfix.min.js"></script> 
+<script src="../static/js/slick.js"></script> 
+<script src="../static/js/lightbox.js"></script> 
+<script src="../static/js/isotope.js"></script> 
+<script src="../static/js/swiper-bundle.min.js"></script>
+
+<!-- Global Init -->
+<script src="../static/js/custom.js"></script>
+
+<script>
+
+    var temp = true;
+
+    $(function() {
+        var selectedClass = "";
+        $("p").click(function(){
+        selectedClass = $(this).attr("data-rel");
+        $("#portfolio").fadeTo(50, 0.1);
+            $("#portfolio div").not("."+selectedClass).fadeOut();
+        setTimeout(function() {
+          $("."+selectedClass).fadeIn();
+          $("#portfolio").fadeTo(50, 1);
+        }, 500);
+            
+        });
+    });
+
+    function showDropdown() {
+        if(temp) {
+            document.getElementsByClassName('category-dropdown')[0].style.display = 'block';
+            temp = false;
+        }
+        else {
+            document.getElementsByClassName('category-dropdown')[0].style.display = 'none';
+            temp = true;
+        }
+    }
+
+    function hoverDropdown() {
+        document.getElementsByClassName('category-dropdown')[0].style.display = 'block';
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+    <!-- Whatsapp widget -->
+    <a class="wa-widget" href="https://wa.me//+919363303725" target="_blank"><i class="fa fa-whatsapp"></i></a>
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="left-content">
+                        <div class="thumb">
+                            <div class="inner-content">
+                                <h4>Shop @ Kalyaniis</h4>
+                                <span>Exclusive women's collection</span>
+                                <div class="main-border-button">
+                                    <a href="home#latestproducts">Purchase Now!</a>
+                                </div>
+                            </div>
+                            <img src="./static/images/left-banner-image.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="right-content">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-6">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>Exclusive silk sarees</h4>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                                <h4>Exclusive silk sarees</h4>
+                                                <div class="main-border-button">
+                                                    <a href="{% url 'productcategory' 'silksarees' %}">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="./static/images/silksaree-main.png" class="sqr-img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-6">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>Designer sarees</h4>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                                <h4>Designer sarees</h4>
+                                                <div class="main-border-button">
+                                                    <a href="{% url 'productcategory' 'designersarees' %}">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="./static/images/designersaree-main.jpg" class="vertical-img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-6" style="margin-top: -128px;">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>Kurtis</h4>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                                <h4>Kurtis</h4>
+                                                <div class="main-border-button">
+                                                    <a href="{% url 'productcategory' 'kurtis' %}">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="./static/images/kurti-main.jpg" class="vertical-img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-6">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>Lehenga</h4>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                                <h4>Lehenga</h4>
+                                                <div class="main-border-button">
+                                                    <a href="{% url 'productcategory' 'lehenga' %}">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="./static/images/lehenga-main.jpg" class="sqr-img sqr-adj">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+    <br id="latestproducts">
+    <!-- ***** Silk sarees latest ***** -->
+    <section class="section" id="women">
+        <div class="container">
+            <a class="shopmore-1" href="{% url 'productcategory' 'silksarees' %}"><i class="fa fa-plus"></i>Shop More</a>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Silk Sarees Latest</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                            {% for product in silksarees %}
+                            <div class="item">
+                                <div class="thumb">
+                                    <a href="{% url 'productdetail' product.product_id %}"><img src="../{{ product.image1 }}" alt=""></a>
+                                </div>
+                                <div class="down-content">
+                                    <a href="{% url 'productdetail' product.product_id %}"><h4>{{ product.productname }}</h4></a>
+                                    <li><a class="nav-link scrollto getstartedwhatsapp" target="_blank" onclick="openChathome('{{ product.product_id }}')"><span><i class="fa fa-whatsapp fa-icon"></i></span>WhatsApp DM</a></li>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shopmore-2">
+            <a href="{% url 'productcategory' 'silksarees' %}"><i class="fa fa-plus"></i>Shop More</a>
+        </div>
+    </section>
+    <!-- ***** Silk sarees latest Ends ***** -->
+
+    <!-- ***** Designer sarees latest ***** -->
+    <section class="section" id="women">
+        <div class="container">
+            <a class="shopmore-1" href="{% url 'productcategory' 'designersarees' %}"><i class="fa fa-plus"></i>Shop More</a>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Designer Sarees Latest</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                            {% for product in designersarees %}
+                            <div class="item">
+                                <div class="thumb">
+                                    <a href="{% url 'productdetail' product.product_id %}"><img src="../{{ product.image1 }}" alt=""></a>
+                                </div>
+                                <div class="down-content">
+                                    <a href="{% url 'productdetail' product.product_id %}"><h4>{{ product.productname }}</h4></a>
+                                    <li><a class="nav-link scrollto getstartedwhatsapp" href="https://wa.me//+919363303725" target="_blank"><span><i class="fa fa-whatsapp fa-icon"></i></span>WhatsApp DM</a></li>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shopmore-2">
+            <a href="{% url 'productcategory' 'designersarees' %}"><i class="fa fa-plus"></i>Shop More</a>
+        </div>
+    </section>
+    <!-- ***** Designer sarees latest Ends ***** -->
+
+    <!-- ***** Kurtis latest ***** -->
+    <section class="section" id="women">
+        <div class="container">
+            <a class="shopmore-1" href="{% url 'productcategory' 'kurtis' %}"><i class="fa fa-plus"></i>Shop More</a>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Kurtis Latest</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                            {% for product in kurtis %}
+                            <div class="item">
+                                <div class="thumb">
+                                    <a href="{% url 'productdetail' product.product_id %}"><img src="../{{ product.image1 }}" alt=""></a>
+                                </div>
+                                <div class="down-content">
+                                    <a href="{% url 'productdetail' product.product_id %}"><h4>{{ product.productname }}</h4></a>
+                                    <li><a class="nav-link scrollto getstartedwhatsapp" href="https://wa.me//+919363303725" target="_blank"><span><i class="fa fa-whatsapp fa-icon"></i></span>WhatsApp DM</a></li>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shopmore-2">
+            <a href="{% url 'productcategory' 'kurtis' %}"><i class="fa fa-plus"></i>Shop More</a>
+        </div>
+    </section>
+    <!-- ***** Kurtis latest Ends ***** -->
+
+    <!-- ***** Lehengas latest ***** -->
+    <section class="section" id="women">
+        <div class="container">
+            <a class="shopmore-1" href="{% url 'productcategory' 'lehenga' %}"><i class="fa fa-plus"></i>Shop More</a>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Lehenga Latest</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                            {% for product in lehengas %}
+                            <div class="item">
+                                <div class="thumb">
+                                    <a href="{% url 'productdetail' product.product_id %}"><img src="../{{ product.image1 }}" alt=""></a>
+                                </div>
+                                <div class="down-content">
+                                    <a href="{% url 'productdetail' product.product_id %}"><h4>{{ product.productname }}</h4></a>
+                                    <li><a class="nav-link scrollto getstartedwhatsapp" href="https://wa.me//+919363303725" target="_blank"><span><i class="fa fa-whatsapp fa-icon"></i></span>WhatsApp DM</a></li>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shopmore-2">
+            <a href="{% url 'productcategory' 'lehenga' %}"><i class="fa fa-plus"></i>Shop More</a>
+        </div>
+        
+    </section>
+
+    <!-- ***** Lehengas latest Ends ***** -->
+
+    <!-- ***** Explore Area Starts ***** -->
+    <br id="exploreit">
+    <section class="section" id="explore">
+        <div class="container">
+            <div class="row">
+                    <div class="left-content">
+                        <h5>Kalyaniis.</h5>
+                        <div class="row">
+                            <div class="col-lg-6 brandcontent">
+                                <h2>OUR STORE</h2>
+                                <p>Kalyanii's is a clothing brand – that’s owned by us, and supported by you. If you’re looking for trendy as well as homely styles that are one-of-a-kind, Kalyaniis is what you should look up on.</p>
+                            </div>
+                            <div class="col-lg-6 brandcontent">
+                                <h2>OUR COLLECTION</h2>
+                                <p>Kalyanii's  – platform where exclusive handlooms from all over India is available.
+                                    Be it Maheshwari and Chanderi sarees from Madhya Pradesh, Bishnupuri, Murshidabadi and Tussor sarees from Bengal or the beautiful
+                                    Kanjivaram sarees from Tamilnadu, its all here</p>
+                            </div>
+                        </div>
+                        <p style="background: #363b3e;color: white;font-size: 20px;">You look varieties, we have it all. Happy Shopping!</p>
+                        </p>
+                    </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Explore Area Ends ***** -->
+
+    <script>
+        function openChathome(id) {
+            url = window.location.href
+            arr = url.split('/')
+            url = arr[0] + '//' + arr[2] + '/products/' + String(id)
+            window.open("https://wa.me/+919363303725/?text=I am interested in this product. "+encodeURIComponent(url))
+        }
+    </script>
+
+{% endblock %}
