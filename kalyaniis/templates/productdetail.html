@@ -87,22 +87,34 @@
     // variable Zoom Power
     var zoomPower = 4;
 
+    var globalActiveInd = 1;
+
     // magnifying logic
     var sub_width = 0;
     var sub_height = 0;
     var mx, my;
     $(".zoom-area").mousemove(function(e){
       var activeInd = swiper.activeIndex;
-      if (!sub_width && !sub_height) {
+
+      if(activeInd==0){
         var image_object = new Image();
-        // image_object.src = $(".small-img").attr("src");
-        image_object.src = document.getElementsByTagName("img")[activeInd].src;
-        console.log(image_object.src)
+        image_object.src = $(".small-img").attr("src");
+      }else{
+        if(globalActiveInd != activeInd) {
+          sub_width = 0;
+          sub_height = 0;
+          globalActiveInd = activeInd;
+        }
+        var image_object = new Image();
+        image_object.src = document.getElementsByTagName("img")[activeInd+1].src
+      }
+    
+      if (!sub_width && !sub_height) {
+        
         sub_width = image_object.width;
         sub_height = image_object.height;
       } else {
         var magnify_position = $(this).offset();
-        // console.log(magnify_position);
         mx = e.pageX - magnify_position.left;
         my = e.pageY - magnify_position.top;
 
@@ -112,21 +124,33 @@
           $(".large").fadeOut(100);
         }
         if ($(".large").is(":visible")) {
-          applyZoom();
+          applyZoom(image_object, activeInd);
         }
       }
     });
 
-    function applyZoom() {
-      $(".large").css("background","url('" + $(".small-img").attr("src") + "') no-repeat");
-      $(".large").css("background-size", $(".small-img").width()*zoomPower + 'px' + ' ' + $(".small-img").height()*zoomPower + 'px');
-      var rx = Math.round(mx/$(".small-img").width()*$(".small-img").width()*zoomPower - $(".large").width()/2)*-1;
-      var ry = Math.round(my/$(".small-img").height()*$(".small-img").height()*zoomPower - $(".large").height()/2)*-1;
+    function applyZoom(img, ind) {
+      if(ind==0){
+        $(".large").css("background","url('" + $(".small-img").attr("src") + "') no-repeat");
+        $(".large").css("background-size", $(".small-img").width()*zoomPower + 'px' + ' ' + $(".small-img").height()*zoomPower + 'px');
+        var rx = Math.round(mx/$(".small-img").width()*$(".small-img").width()*zoomPower - $(".large").width()/2)*-1;
+        var ry = Math.round(my/$(".small-img").height()*$(".small-img").height()*zoomPower - $(".large").height()/2)*-1;
 
-      var bgp = rx + "px " + ry + "px";
+        var bgp = rx + "px " + ry + "px";
 
-      var px = mx - $(".large").width()/2;
-      var py = my - $(".large").height()/2;
+        var px = mx - $(".large").width()/2;
+        var py = my - $(".large").height()/2;
+      }else{
+        $(".large").css("background","url('" + img.src + "') no-repeat");
+        $(".large").css("background-size", sub_width*zoomPower + 'px' + ' ' + sub_height*zoomPower + 'px');
+        var rx = Math.round(mx/sub_width*sub_width*zoomPower - $(".large").width()/2)*-1;
+        var ry = Math.round(my/sub_height*sub_height*zoomPower - $(".large").height()/2)*-1;
+
+        var bgp = rx + "px " + ry + "px";
+
+        var px = mx - $(".large").width()/2;
+        var py = my - $(".large").height()/2;
+      }
 
       $(".large").css({left: px, top: py, backgroundPosition: bgp});
     }
@@ -172,12 +196,22 @@
 
     function toggleZoom(e) {
       if(e.checked) {
-        document.getElementsByClassName('large')[0].style.opacity = 1;
         document.getElementsByClassName('zoom-area')[0].style.cursor = 'none';
+        var elements = document.querySelectorAll('.large')
+
+        for (var i = 0; i < elements.length; i++) {
+          var element = elements[i];
+          element.style.visibility = 'visible';
+        }
       }
       else {
-        document.getElementsByClassName('large')[0].style.opacity = 0;
         document.getElementsByClassName('zoom-area')[0].style.cursor = 'auto';
+        var elements = document.querySelectorAll('.large')
+
+        for (var i = 0; i < elements.length; i++) {
+          var element = elements[i];
+          element.style.visibility = 'hidden';
+        }
       }
     }
 
